@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sheree &amp; Trent · Share your photos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sand:        #E8DFD0;
+      --linen:       #EAE1D5;
+      --grey-beige:  #DFD8CF;
+      --light-beige: #ECE2D0;
+      --tan:         #C5A588;
+      --beige:       #D7C5AE;
+      --champagne:   #F4E0C5;
+      --taupe:       #B9A592;
+      --ivory:       #FAF6EE;
+      --brown:       #6B4F3A;
+      --grey:        #8A7560;
+      --shadow-sm: 0 2px 8px rgba(107, 79, 58, 0.06);
+      --shadow-md: 0 4px 20px rgba(107, 79, 58, 0.10);
+      --shadow-lg: 0 8px 32px rgba(107, 79, 58, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--ivory);
+      color: var(--brown);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .container { max-width: 480px; margin: 0 auto; }
+    .content { padding: 0 16px 24px; }
+
+    /* HERO with image */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 480px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(1.02) saturate(0.92);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom,
+          rgba(250, 246, 238, 0.0) 0%,
+          rgba(250, 246, 238, 0.0) 40%,
+          rgba(250, 246, 238, 0.6) 75%,
+          rgba(250, 246, 238, 1.0) 100%);
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 24px 28px;
+      text-align: center;
+    }
+    .hearts {
+      font-size: 22px;
+      letter-spacing: 12px;
+      margin-bottom: 10px;
+      color: var(--tan);
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 52px;
+      color: var(--brown);
+      line-height: 1.0;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
+    }
+    h1 .amp {
+      font-size: 44px;
+      color: var(--tan);
+      font-weight: 400;
+    }
+    .subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: var(--brown);
+      margin-bottom: 4px;
+    }
+    .date {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--grey);
+      text-transform: uppercase;
+    }
+
+    /* TAGLINE CARD */
+    .tagline-card {
+      background: linear-gradient(135deg, var(--champagne) 0%, var(--light-beige) 100%);
+      border-radius: 20px;
+      padding: 28px 24px;
+      margin: 8px 0 28px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+    .tagline-card::before, .tagline-card::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 1px;
+      background: var(--tan);
+      opacity: 0.4;
+    }
+    .tagline-card::before { top: 12px; }
+    .tagline-card::after { bottom: 12px; }
+    .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--brown);
+      line-height: 1.3;
+      font-weight: 500;
+    }
+
+    /* UPLOAD ZONE */
+    .upload-zone {
+      display: block;
+      background: linear-gradient(135deg, var(--linen) 0%, var(--ivory) 100%);
+      border: 2px dashed var(--tan);
+      border-radius: 20px;
+      padding: 44px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-md);
+    }
+    .upload-zone:active {
+      background: var(--sand);
+      transform: scale(0.99);
+      box-shadow: var(--shadow-sm);
+    }
+    .upload-icon { font-size: 48px; margin-bottom: 14px; filter: sepia(0.3); }
+    .upload-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 24px;
+      color: var(--brown);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .upload-hint { font-size: 12px; color: var(--grey); letter-spacing: 0.5px; }
+    #file-input { display: none; }
+
+    /* PROGRESS */
+    .progress {
+      display: none;
+      margin-top: 24px;
+      padding: 28px;
+      background: var(--ivory);
+      border: 1px solid var(--beige);
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+    }
+    .progress.active { display: block; }
+    .progress-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 16px;
+      color: var(--brown);
+    }
+    .progress-bar { background: var(--linen); height: 8px; border-radius: 4px; overflow: hidden; }
+    .progress-fill { background: linear-gradient(90deg, var(--tan), var(--taupe)); height: 100%; transition: width 0.3s; width: 0%; }
+
+    /* THANK YOU */
+    .thank-you {
+      display: none;
+      text-align: center;
+      padding: 48px 24px;
+      background: linear-gradient(135deg, var(--champagne) 0%, var(--ivory) 100%);
+      border: 1px solid var(--beige);
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      margin-top: 24px;
+    }
+    .thank-you.active { display: block; animation: fadeIn 0.6s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .thank-you-hearts { font-size: 32px; letter-spacing: 10px; margin-bottom: 20px; color: var(--tan); }
+    .thank-you-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 38px;
+      color: var(--brown);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+    .thank-you-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 19px;
+      color: var(--grey);
+      margin-bottom: 28px;
+      line-height: 1.4;
+    }
+    .add-more {
+      background: linear-gradient(135deg, var(--tan), var(--taupe));
+      color: var(--ivory);
+      border: none;
+      padding: 14px 36px;
+      border-radius: 28px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 17px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+      letter-spacing: 0.3px;
+    }
+    .add-more:active { transform: scale(0.97); box-shadow: none; }
+
+    /* GALLERY */
+    .gallery-section { margin-top: 56px; }
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin: 32px 0 28px;
+    }
+    .section-divider .line { flex: 0 1 60px; height: 1px; background: var(--tan); opacity: 0.4; }
+    .section-divider .ornament-icon { color: var(--taupe); font-size: 12px; letter-spacing: 6px; }
+    .gallery-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 32px;
+      text-align: center;
+      color: var(--brown);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .gallery-subtitle {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--grey);
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .gallery-item {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: var(--shadow-sm);
+    }
+    .gallery-item:nth-child(4n+1) { background: var(--sand); }
+    .gallery-item:nth-child(4n+2) { background: var(--beige); }
+    .gallery-item:nth-child(4n+3) { background: var(--champagne); }
+    .gallery-item:nth-child(4n+4) { background: var(--linen); }
+    .gallery-item:active { transform: scale(0.97); box-shadow: none; }
+    .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-empty, .gallery-loading {
+      grid-column: span 2;
+      text-align: center;
+      padding: 48px 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: var(--grey);
+      background: var(--linen);
+      border-radius: 16px;
+    }
+
+    /* FOOTER */
+    .footer { text-align: center; margin-top: 56px; padding: 32px 0 24px; }
+    .footer::before {
+      content: '· · ·';
+      display: block;
+      color: var(--tan);
+      letter-spacing: 8px;
+      margin-bottom: 20px;
+    }
+    .footer-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--taupe);
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(40, 28, 16, 0.94);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img, .lightbox video {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: var(--ivory);
+      font-size: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Cormorant Garamond', serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- HERO with pampas grass image -->
+    <div class="hero">
+      <img class="hero-image" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=960&q=80" alt="Pampas grass">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hearts">♡ ♡</div>
+        <h1>Sheree <span class="amp">&amp;</span> Trent</h1>
+        <div class="subtitle">Jervis Bay</div>
+        <div class="date">4 — 6 May 2026</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="tagline-card">
+        <p class="tagline">Help us catch every<br>little moment</p>
+      </div>
+
+      <div id="upload-section">
+        <label class="upload-zone" for="file-input">
+          <div class="upload-icon">📷</div>
+          <div class="upload-text">Add your photos</div>
+          <div class="upload-hint">Tap to choose from your camera roll</div>
+        </label>
+        <input type="file" id="file-input" accept="image/*,video/*" multiple>
+
+        <div class="progress" id="progress">
+          <div class="progress-text" id="progress-text">Sending your photos...</div>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="thank-you" id="thank-you">
+        <div class="thank-you-hearts">♡ ♡ ♡</div>
+        <div class="thank-you-title">thank you</div>
+        <div class="thank-you-text">your photos are with us<br>(and we can't wait to see them)</div>
+        <button class="add-more" onclick="resetUpload()">add more photos</button>
+      </div>
+
+      <div class="gallery-section">
+        <div class="section-divider">
+          <div class="line"></div>
+          <div class="ornament-icon">· · ·</div>
+          <div class="line"></div>
+        </div>
+        <h2 class="gallery-title">the gallery</h2>
+        <div class="gallery-subtitle">photos from everyone</div>
+        <div id="gallery" class="gallery-grid">
+          <div class="gallery-loading">loading photos...</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="footer-text">with hearts full<br>&amp; toes in the sand</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close">&times;</button>
+    <div id="lightbox-content"></div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwMr0ASwqCGTFQDgH7CHcyKCt3Lumexb0Wf2E7PbacxZuFJ56Z8s1yluE1x56cemUPwIg/exec';
+
+    const fileInput = document.getElementById('file-input');
+    const uploadSection = document.getElementById('upload-section');
+    const thankYou = document.getElementById('thank-you');
+    const progress = document.getElementById('progress');
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+
+    fileInput.addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files);
+      if (files.length === 0) return;
+
+      progress.classList.add('active');
+      let uploaded = 0;
+
+      for (const file of files) {
+        progressText.textContent = `Sending photo ${uploaded + 1} of ${files.length}...`;
+        try {
+          await uploadFile(file);
+          uploaded++;
+          progressFill.style.width = `${(uploaded / files.length) * 100}%`;
+        } catch (err) {
+          console.error('Upload failed:', err);
+        }
+      }
+
+      setTimeout(() => {
+        uploadSection.style.display = 'none';
+        thankYou.classList.add('active');
+        loadGallery();
+      }, 400);
+    });
+
+    function uploadFile(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = async () => {
+          const base64 = reader.result.split(',')[1];
+          try {
+            const res = await fetch(SCRIPT_URL, {
+              method: 'POST',
+              body: JSON.stringify({
+                fileName: file.name,
+                mimeType: file.type,
+                fileData: base64
+              })
+            });
+            const result = await res.json();
+            if (result.success) resolve(); else reject(result.error);
+          } catch (err) { reject(err); }
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function resetUpload() {
+      thankYou.classList.remove('active');
+      uploadSection.style.display = 'block';
+      progress.classList.remove('active');
+      progressFill.style.width = '0%';
+      fileInput.value = '';
+    }
+
+    async function loadGallery() {
+      const gallery = document.getElementById('gallery');
+      try {
+        const res = await fetch(SCRIPT_URL);
+        const data = await res.json();
+        if (!data.photos || data.photos.length === 0) {
+          gallery.innerHTML = '<div class="gallery-empty">be the first to share a moment ♡</div>';
+          return;
+        }
+        gallery.innerHTML = data.photos.map(p => {
+          if (p.mimeType.startsWith('video/')) {
+            return `<div class="gallery-item" onclick="openLightbox('${p.id}', 'video', '${p.mimeType}')"><video src="${p.viewUrl}" muted playsinline></video></div>`;
+          }
+          return `<div class="gallery-item" onclick="openLightbox('${p.id}', 'image')"><img src="${p.thumbnailUrl}" loading="lazy" alt=""></div>`;
+        }).join('');
+      } catch (err) {
+        gallery.innerHTML = '<div class="gallery-empty">couldn\'t load the gallery — try refreshing</div>';
+      }
+    }
+
+    function openLightbox(id, type, mimeType) {
+      const content = document.getElementById('lightbox-content');
+      const url = `https://drive.google.com/uc?id=${id}`;
+      if (type === 'video') {
+        content.innerHTML = `<video src="${url}" controls autoplay></video>`;
+      } else {
+        content.innerHTML = `<img src="${url}" alt="">`;
+      }
+      document.getElementById('lightbox').classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.getElementById('lightbox-content').innerHTML = '';
+    }
+
+    loadGallery();
+  </script>
+</body>
+</html>
