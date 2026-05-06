@@ -35,7 +35,6 @@
     .container { max-width: 480px; margin: 0 auto; }
     .content { padding: 0 16px 24px; }
 
-    /* HERO with image */
     .hero {
       position: relative;
       width: 100%;
@@ -106,7 +105,6 @@
       text-transform: uppercase;
     }
 
-    /* TAGLINE CARD */
     .tagline-card {
       background: linear-gradient(135deg, var(--champagne) 0%, var(--light-beige) 100%);
       border-radius: 20px;
@@ -137,7 +135,6 @@
       font-weight: 500;
     }
 
-    /* UPLOAD ZONE */
     .upload-zone {
       display: block;
       background: linear-gradient(135deg, var(--linen) 0%, var(--ivory) 100%);
@@ -149,11 +146,7 @@
       transition: all 0.25s ease;
       box-shadow: var(--shadow-md);
     }
-    .upload-zone:active {
-      background: var(--sand);
-      transform: scale(0.99);
-      box-shadow: var(--shadow-sm);
-    }
+    .upload-zone:active { background: var(--sand); transform: scale(0.99); box-shadow: var(--shadow-sm); }
     .upload-icon { font-size: 48px; margin-bottom: 14px; filter: sepia(0.3); }
     .upload-text {
       font-family: 'Cormorant Garamond', serif;
@@ -166,7 +159,6 @@
     .upload-hint { font-size: 12px; color: var(--grey); letter-spacing: 0.5px; }
     #file-input { display: none; }
 
-    /* PROGRESS */
     .progress {
       display: none;
       margin-top: 24px;
@@ -188,7 +180,6 @@
     .progress-bar { background: var(--linen); height: 8px; border-radius: 4px; overflow: hidden; }
     .progress-fill { background: linear-gradient(90deg, var(--tan), var(--taupe)); height: 100%; transition: width 0.3s; width: 0%; }
 
-    /* THANK YOU */
     .thank-you {
       display: none;
       text-align: center;
@@ -234,7 +225,6 @@
     }
     .add-more:active { transform: scale(0.97); box-shadow: none; }
 
-    /* GALLERY */
     .gallery-section { margin-top: 56px; }
     .section-divider {
       display: flex;
@@ -270,13 +260,43 @@
       cursor: pointer;
       transition: all 0.25s;
       box-shadow: var(--shadow-sm);
+      position: relative;
     }
     .gallery-item:nth-child(4n+1) { background: var(--sand); }
     .gallery-item:nth-child(4n+2) { background: var(--beige); }
     .gallery-item:nth-child(4n+3) { background: var(--champagne); }
     .gallery-item:nth-child(4n+4) { background: var(--linen); }
     .gallery-item:active { transform: scale(0.97); box-shadow: none; }
-    .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-item .video-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-item .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 48px;
+      background: rgba(107, 79, 58, 0.85);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .gallery-item .play-icon::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 14px solid var(--ivory);
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent;
+      margin-left: 4px;
+    }
     .gallery-empty, .gallery-loading {
       grid-column: span 2;
       text-align: center;
@@ -289,7 +309,6 @@
       border-radius: 16px;
     }
 
-    /* FOOTER */
     .footer { text-align: center; margin-top: 56px; padding: 32px 0 24px; }
     .footer::before {
       content: '· · ·';
@@ -311,36 +330,63 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(40, 28, 16, 0.94);
+      background: rgba(20, 14, 8, 0.96);
       z-index: 100;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 0;
     }
     .lightbox.active { display: flex; }
-    .lightbox img, .lightbox video {
-      max-width: 100%;
+    .lightbox-media-wrapper {
+      width: 100%;
+      height: 100%;
+      max-width: 95vw;
+      max-height: 95vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox img {
+      max-width: 95vw;
       max-height: 90vh;
-      border-radius: 12px;
+      width: auto;
+      height: auto;
+      border-radius: 8px;
       box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
     }
-    .lightbox-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      color: var(--ivory);
-      font-size: 36px;
-      background: none;
+ .lightbox iframe {
+      width: 95vw;
+      height: 90vh;
+      max-width: 900px;
       border: none;
+      border-radius: 8px;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+      background: black;
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      width: 44px;
+      height: 44px;
+      color: var(--ivory);
+      font-size: 32px;
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      border-radius: 50%;
       cursor: pointer;
       font-family: 'Cormorant Garamond', serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 101;
+      line-height: 1;
     }
   </style>
 </head>
 <body>
   <div class="container">
 
-    <!-- HERO with pampas grass image -->
     <div class="hero">
       <img class="hero-image" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=960&q=80" alt="Pampas grass">
       <div class="hero-overlay"></div>
@@ -397,9 +443,9 @@
     </div>
   </div>
 
-  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <button class="lightbox-close">&times;</button>
-    <div id="lightbox-content"></div>
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+    <div class="lightbox-media-wrapper" id="lightbox-content"></div>
   </div>
 
   <script>
@@ -479,27 +525,28 @@
         }
         gallery.innerHTML = data.photos.map(p => {
           if (p.mimeType.startsWith('video/')) {
-            return `<div class="gallery-item" onclick="openLightbox('${p.id}', 'video', '${p.mimeType}')"><video src="${p.viewUrl}" muted playsinline></video></div>`;
+            return `<div class="gallery-item" onclick="openLightbox('${p.id}', 'video')">
+              <img class="video-thumb" src="${p.thumbnailUrl}" loading="lazy" alt="">
+              <div class="play-icon"></div>
+            </div>`;
           }
-          return `<div class="gallery-item" onclick="openLightbox('${p.id}', 'image')"><img src="${p.thumbnailUrl}" loading="lazy" alt=""></div>`;
+          return `<div class="gallery-item" onclick="openLightbox('${p.id}', 'image')">
+            <img src="${p.thumbnailUrl}" loading="lazy" alt="">
+          </div>`;
         }).join('');
       } catch (err) {
         gallery.innerHTML = '<div class="gallery-empty">couldn\'t load the gallery — try refreshing</div>';
       }
     }
 
-    function openLightbox(id, type, mimeType) {
+function openLightbox(id, type) {
       const content = document.getElementById('lightbox-content');
-      const url = `https://drive.google.com/uc?id=${id}`;
-      if (type === 'video') {
-        content.innerHTML = `<video src="${url}" controls autoplay></video>`;
-      } else {
-        content.innerHTML = `<img src="${url}" alt="">`;
-      }
+      content.innerHTML = `<iframe src="https://drive.google.com/file/d/${id}/preview" allow="autoplay" allowfullscreen></iframe>`;
       document.getElementById('lightbox').classList.add('active');
     }
 
-    function closeLightbox() {
+    function closeLightbox(event) {
+      if (event.target.tagName === 'IMG' || event.target.tagName === 'IFRAME') return;
       document.getElementById('lightbox').classList.remove('active');
       document.getElementById('lightbox-content').innerHTML = '';
     }
